@@ -29,9 +29,12 @@ import java.util.Set;
 
 public class BluetoothScannerActivity extends AppCompatActivity {
 
-    public static String key = "aq5s4z069w0WE4NPxidwqw==";
+    public static String key = "ஆர்வமுடையவர்கள்ஆர்வமுடையஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்வர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்";
+    //"úêµ¶§µ¶§¥£औकखगघङ";
+            //"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,";//"aq5s4z069w0WE4NPxidwqw==";
     public static String name = "UNKNOWN" ;
     Set<String> myset ;
+
    static List<String> mlist ;
    static ArrayList<String> mylist2 = new ArrayList<String>();
     private static final int REQUEST_ENABLE_BLUETOOTH = 1;
@@ -62,7 +65,7 @@ public class BluetoothScannerActivity extends AppCompatActivity {
             s1 = s1 + "    " + msg;
             if (statusTextView != null) {
                 statusTextView.setText(s1);
-                Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "STATUS_TEXT_VIEW IS NULL", Toast.LENGTH_SHORT).show();
             }
@@ -183,7 +186,7 @@ public class BluetoothScannerActivity extends AppCompatActivity {
                     display("DISCOVERY STARTED SUCCESSFULLY");
                     name = bluetoothAdapter.getName();
                     boolean success = bluetoothAdapter.setName(key);
-                    display("Set name to " + key + " : " + success );
+                    display(success+  " key = " + key );
 
                 } else {
                     display("DISCOVERY FAILED TO START");

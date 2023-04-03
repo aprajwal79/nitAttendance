@@ -2,6 +2,7 @@ package com.nitap.attende;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -232,9 +233,8 @@ public class MyUtils {
     }
 
     public static void clearAppData(Context context) {
-        MyUtils.removeAll(context);
-        LoginActivity.signOut(context);
-        context.startActivity(new Intent(context,LoginActivity.class));
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        am.clearApplicationUserData();
 
     }
 

@@ -1,7 +1,13 @@
 package com.nitap.attende;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +30,7 @@ public class TeacherDashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assert MyUtils.getConfiguration(this).teacher!=null;
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_teacher_dashboard);
         // tConfig = MyUtils.getTeacherConfiguration(this);
         /*
         tConfig = new TeacherConfiguration();
@@ -65,13 +71,34 @@ public class TeacherDashboardActivity extends AppCompatActivity {
         assert tConfig!=null;
         Toast.makeText(this, tConfig.teacher.email, Toast.LENGTH_SHORT).show();
 
+
+
+*/
+
         TextView fname,lname;
         fname = findViewById(R.id.fname);
         lname = findViewById(R.id.lname);
         String[] contents = tConfig.teacher.name.split(" ");
         fname.setText(contents[0]);
         lname.setText(contents[1]);
+        ImageButton aboutUsBtn = findViewById(R.id.about_us_btn);
+        aboutUsBtn.setOnClickListener(v -> {
+            //signOut();
+            Toast.makeText(getApplicationContext(), "Signed Out Successfully", Toast.LENGTH_SHORT).show();
 
-*/
+            ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    activityManager.clearApplicationUserData();
+                    //dialog.cancel();
+                }
+            },1000);
+
+    });
+
+
+
+
     }
 }

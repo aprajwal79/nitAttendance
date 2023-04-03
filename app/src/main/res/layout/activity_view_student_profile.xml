@@ -24,49 +24,49 @@
             android:id="@+id/rollno"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
+            android:textSize="20dp"
             android:text="TextView" />
         <TextView
             android:id="@+id/fullname"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
+            android:textSize="20dp"
             android:text="TextView" />
         <TextView
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
+            android:textSize="20dp"
             android:text="TextView" />
         <TextView
         android:id="@+id/degree"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-
+            android:textSize="20dp"
         android:text="TextView" />
         <TextView
             android:id="@+id/branch"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
+            android:textSize="20dp"
             android:text="TextView" />
         <TextView
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
+            android:textSize="20dp"
             android:text="TextView" />
         <TextView
             android:id="@+id/sem"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
+            android:textSize="20dp"
             android:text="TextView" />
         <TextView
             android:id="@+id/sectionName"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-
+            android:textSize="20dp"
             android:text="TextView" />
 
 

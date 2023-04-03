@@ -70,7 +70,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //studentConfiguration = MyUtils.getStudentConfiguration(this);
+        myConfiguration = MyUtils.getConfiguration(this);
+        assert myConfiguration.student!=null;
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_client_id))
@@ -83,14 +84,18 @@ public class HomeActivity extends AppCompatActivity {
         binding.aboutUsBtn.setOnClickListener(v -> {
             //signOut();
             Toast.makeText(getApplicationContext(), "Signed Out Successfully", Toast.LENGTH_SHORT).show();
+
+            ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                    am.clearApplicationUserData();
-
+                    activityManager.clearApplicationUserData();
+                    //dialog.cancel();
                 }
-            },500);
+            },1000);
+
+
+
         });
         assert MyUtils.getConfiguration(this).student!=null;
 
@@ -109,19 +114,18 @@ public class HomeActivity extends AppCompatActivity {
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyConfiguration myConfiguration1 = MyUtils.getConfiguration(getApplicationContext());
-                if(myConfiguration1!=null) {
-                    startActivity(new Intent(getApplicationContext(),ViewStudentProfileActivity.class));
-                }
+                MyConfiguration myConfiguration = MyUtils.getConfiguration(getApplicationContext());
+                assert  myConfiguration.student!=null;
+                startActivity(new Intent(getApplicationContext(),ViewStudentProfileActivity.class));
             }
         });
 
         TextView fname,lname;
         fname = findViewById(R.id.fname);
         lname = findViewById(R.id.lname);
-//        String[] contents = myConfiguration.student.name.split(" ");
-//        fname.setText(contents[0]);
-  //      lname.setText(contents[1]);
+        String[] contents = MyUtils.getConfiguration(this).student.name.split(" ");
+        fname.setText(contents[0]);
+        lname.setText(contents[1]);
 
 
 

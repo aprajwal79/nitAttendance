@@ -38,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.nitap.attende.models.Admin;
 import com.nitap.attende.models.MyConfiguration;
 import com.nitap.attende.models.MyStudent;
 import com.nitap.attende.models.Section;
@@ -360,7 +361,7 @@ public class LoginActivity extends AppCompatActivity {
                     fetchSectionInfos(myConfiguration.teacher);
 
                 } else {
-                   checkIfUserIsAdmin(email);
+                   checkIfUserIsAdmin();
                 }
                 courseRef.removeEventListener(this);
             }
@@ -458,22 +459,24 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void checkIfUserIsAdmin(String email) {
-        DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("admins").child(email);
+    private void checkIfUserIsAdmin() {
+        String adminId = mAuth.getCurrentUser().getEmail().replace(".","?");
+
+        DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("admins").child(adminId);
         courseRef.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NewApi")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     //TODO:  Now admin exists, download admin object and save jsonString
-                    MyUtils.saveString(getApplicationContext(),"USERTYPE","ADMIN");
-                    MyUtils.saveString(getApplicationContext(),"EMAIL",email);
-                    MyUtils.saveString(getApplicationContext(),"ADMIN", email);
-                    MyUtils.removeString(getApplicationContext(),"STUDENT");
-                    MyUtils.removeString(getApplicationContext(),"TEACHER");
+                    MyConfiguration myConfiguration = new MyConfiguration();
+                    myConfiguration.admin = snapshot.getValue(Admin.class);
+                    MyUtils.saveConfiguration(getApplicationContext(),myConfiguration);
+
                     hasLeft = true;
                     startActivity(new Intent(getApplicationContext(),AdminActivity.class));
                     finish();
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Account not authorised, try again", Toast.LENGTH_SHORT).show();
                 }
