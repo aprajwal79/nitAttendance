@@ -20,7 +20,8 @@ uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     -->
 <uses-permission
     android:name="android.permission.BLUETOOTH_SCAN"
-    android:usesPermissionFlags="neverForLocation" />
+    android:usesPermissionFlags="neverForLocation"/>
+
 <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />
 <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 <uses-permission android:name="android.permission.CAMERA" />
@@ -103,6 +104,16 @@ uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
             android:name="android.app.lib_name"
             android:value="" />
     </activity>
+
+    <activity
+        android:name="com.nitap.attende.pages.DisplayAttendance"
+        android:exported="true">
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
+    </activity>
+
+
     <activity
         android:name="com.nitap.attende.ReUploadActivity"
         android:exported="false"
@@ -115,6 +126,8 @@ uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
             android:name="android.app.lib_name"
             android:value="" />
     </activity>
+
+
     <activity
         android:name="com.nitap.attende.LoginActivity"
         android:exported="true">
