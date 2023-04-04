@@ -10,19 +10,29 @@ package="com.ttv.facerecog">
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.BLUETOOTH" />
-<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission
+    android:name="android.permission.BLUETOOTH"
+    android:usesPermissionFlags="neverForLocation" />
+<uses-permission
+    android:name="android.permission.BLUETOOTH_ADMIN"
+    android:usesPermissionFlags="neverForLocation" />
+<uses-permission
+    android:name="android.permission.BLUETOOTH_ADVERTISE"
+    android:usesPermissionFlags="neverForLocation" />
+<uses-permission
+    android:name="android.permission.BLUETOOTH_CONNECT"
+    android:usesPermissionFlags="neverForLocation" />
 <!--
 uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <uses-permission android:name="android.permission.BLUETOOTH_MAP" /
     -->
 <uses-permission
     android:name="android.permission.BLUETOOTH_SCAN"
-    android:usesPermissionFlags="neverForLocation"/>
+    android:usesPermissionFlags="neverForLocation" />
 
-<uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />
+<uses-permission
+    android:name="android.permission.NEARBY_WIFI_DEVICES"
+    android:usesPermissionFlags="neverForLocation" />
 <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -147,7 +157,16 @@ uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
     <activity
         android:name="com.nitap.attende.MainActivity2"
         android:exported="true" />
+    <activity
+        android:name="com.nitap.attende.ViewTeacherProfileActivity"
+        android:exported="false"
 
+        />
+    <activity
+        android:name="com.nitap.attende.AddAdminActivity"
+        android:exported="false"
+
+        />
 </application>
 
 </manifest>

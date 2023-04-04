@@ -20,6 +20,7 @@ public class AdminActivity extends AppCompatActivity {
         addClass = findViewById(R.id.button1);
         addSection = findViewById(R.id.button4);
         addTeacher = findViewById(R.id.button7);
+        addAdmin = findViewById(R.id.button10);
 
         addClass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +38,12 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),AddTeacherActivity.class));
+            }
+        });
+        addAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),AddAdminActivity.class));
             }
         });
 

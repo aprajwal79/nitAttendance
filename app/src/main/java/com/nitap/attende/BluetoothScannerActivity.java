@@ -60,7 +60,6 @@ public class BluetoothScannerActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     static void display(Context context, String msg) {

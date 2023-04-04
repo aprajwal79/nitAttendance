@@ -125,15 +125,4 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
-
-    void signOut(){
-        userAuth.getInstance().signOut();
-        mGoogleSigninClient.signOut();
-
-        Toast.makeText(this, "Signed Out Successfully", Toast.LENGTH_SHORT).show();
-        Intent logoutIntent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(logoutIntent);
-    }
-
 }

@@ -16,6 +16,4 @@ public class Student {
     public ArrayList<String> courses;
     public String salt;
 
-
-
 }

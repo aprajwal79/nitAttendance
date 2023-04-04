@@ -21,19 +21,21 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Class" />
+        android:text="Add Class"/>
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modify Class" />
+        android:text="Modify Class"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Class" />
+        android:text="Delete Class"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button4"
@@ -45,13 +47,15 @@
         android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modify Section" />
+        android:text="Modify Section"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Section" />
+        android:text="Delete Section"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button7"
@@ -63,13 +67,15 @@
         android:id="@+id/button8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modify Teacher" />
+        android:text="Modify Teacher"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Teacher" />
+        android:text="Delete Teacher"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button10"
@@ -81,13 +87,15 @@
         android:id="@+id/button11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modify Admin" />
+        android:text="Modify Admin"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Admin" />
+        android:text="Delete Admin"
+        android:visibility="gone"/>
 
   </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

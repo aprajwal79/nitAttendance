@@ -328,7 +328,7 @@ public class LoginActivity extends AppCompatActivity {
                             // ADD SECTION INFO OBJECT TO LIST
                             sectionInfos.add(sectionInfo);
 
-                            if(sectionInfos.size()==sectionIds.size()) {
+                            if(sectionInfos.size() == sectionIds.size()) {
                                 //Completed all tasks
                                 myConfiguration.teacher.sectionInfos = sectionInfos;
                                 //MyUtils.saveConfigurationBuilder(getApplicationContext(),myConfiguration);

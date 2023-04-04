@@ -65,7 +65,13 @@ public class TeacherDashboardActivity extends AppCompatActivity {
             }
         });
 
-
+        ImageButton profileBtn = findViewById(R.id.profile_btn);
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),ViewTeacherProfileActivity.class));
+            }
+        });
 
 
     }
