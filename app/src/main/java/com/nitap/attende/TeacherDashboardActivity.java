@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.nitap.attende.models.MyConfiguration;
 import com.nitap.attende.models.SectionInfo;
 import com.nitap.attende.models.Teacher;
 import com.nitap.attende.models.TeacherConfiguration;
@@ -23,13 +24,13 @@ import java.util.ArrayList;
 
 public class TeacherDashboardActivity extends AppCompatActivity {
 
-    TeacherConfiguration tConfig;
+    MyConfiguration tConfig;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        assert MyUtils.getConfiguration(this).teacher!=null;
+        assert MyUtils.getConfiguration(getApplicationContext()).teacher!=null;
         setContentView(R.layout.activity_teacher_dashboard);
         // tConfig = MyUtils.getTeacherConfiguration(this);
         /*
@@ -74,7 +75,7 @@ public class TeacherDashboardActivity extends AppCompatActivity {
 
 
 */
-
+        tConfig = MyUtils.getConfiguration(getApplicationContext());
         TextView fname,lname;
         fname = findViewById(R.id.fname);
         lname = findViewById(R.id.lname);
