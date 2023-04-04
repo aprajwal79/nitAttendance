@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -15,9 +17,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nitap.attende.models.MyConfiguration;
-import com.nitap.attende.models.SectionInfo;
-import com.nitap.attende.models.Teacher;
-import com.nitap.attende.models.TeacherConfiguration;
+
+import com.nitap.attende.pages.TakeAttendance;
 import com.ttv.facerecog.R;
 
 import java.util.ArrayList;
@@ -32,49 +33,7 @@ public class TeacherDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         assert MyUtils.getConfiguration(getApplicationContext()).teacher!=null;
         setContentView(R.layout.activity_teacher_dashboard);
-        // tConfig = MyUtils.getTeacherConfiguration(this);
-        /*
-        tConfig = new TeacherConfiguration();
-        tConfig.teacher = new Teacher();
-        tConfig.teacher.courses = new ArrayList<>();
-        tConfig.teacher.sectionInfos = new ArrayList<SectionInfo>();
-        tConfig.teacher.name = "PRAJWAL A";
-        tConfig.teacher.teacherId = "aprajwal79@gmail?com";
-        tConfig.teacher.branch = "CSE";
-        tConfig.teacher.email = "aprajwal79@gmail.com";
-        tConfig.teacher.courses.add("CS251");
-        tConfig.teacher.courses.add("CS252");
-        tConfig.teacher.courses.add("CS253");
-        SectionInfo s1 =new SectionInfo();
-        s1.endRollno = "421275";
-        s1.max = "75";
-        s1.sectionFullName = "BTECHCSE22B";
-        s1.startRollno="421201";
-        s1.sectionId="4212";
-        tConfig.teacher.sectionInfos.add(s1);
-        SectionInfo s2 =new SectionInfo();
-        s2.endRollno = "421175";
-        s2.max = "75";
-        s2.sectionFullName = "BTECHCSE22A";
-        s2.startRollno="421101";
-        s2.sectionId="4211";
-        tConfig.teacher.sectionInfos.add(s2);
 
-        DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("teachers").child("aprajwal79@gmail?com");
-        courseRef.setValue(tConfig.teacher).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(TeacherDashboardActivity.this, "SUCCESS", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        assert tConfig!=null;
-        Toast.makeText(this, tConfig.teacher.email, Toast.LENGTH_SHORT).show();
-
-
-
-*/
         tConfig = MyUtils.getConfiguration(getApplicationContext());
         TextView fname,lname;
         fname = findViewById(R.id.fname);
@@ -97,6 +56,14 @@ public class TeacherDashboardActivity extends AppCompatActivity {
             },1000);
 
     });
+
+        ImageButton reportBtn = findViewById(R.id.report_btn);
+        reportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), TakeAttendance.class));
+            }
+        });
 
 
 

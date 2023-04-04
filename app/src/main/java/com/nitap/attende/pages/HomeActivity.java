@@ -1,58 +1,29 @@
 package com.nitap.attende.pages;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.nitap.attende.LoginActivity;
 import com.nitap.attende.MyUtils;
 import com.nitap.attende.models.MyConfiguration;
-import com.nitap.attende.models.StudentConfiguration;
-import com.ttv.face.FaceFeatureInfo;
-import com.ttv.face.FaceResult;
 import com.ttv.facerecog.CameraActivity;
-import com.ttv.facerecog.DBHelper;
-import com.ttv.facerecog.FaceEntity;
-import com.ttv.facerecog.ImageRotator;
-import com.ttv.facerecog.MainActivity;
 import com.ttv.facerecog.R;
-import com.ttv.facerecog.Utils;
 import com.ttv.facerecog.databinding.ActivityHomeBinding;
 
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
 
 import kotlin.jvm.internal.Intrinsics;
 
@@ -90,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     activityManager.clearApplicationUserData();
-                    //dialog.cancel();
+
                 }
             },1000);
 
@@ -99,12 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         assert MyUtils.getConfiguration(this).student!=null;
 
-        binding.reportBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, TakeAttendance.class));
-            }
-        });
+
 
         binding.attendanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +121,6 @@ public class HomeActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        ////////
 
     }
 

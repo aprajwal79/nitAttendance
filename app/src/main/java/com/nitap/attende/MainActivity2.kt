@@ -72,7 +72,6 @@ fun display(msg:String) {
                      .setOnClickListener { v: View? ->
                          val s = ""//editText.text.toString()
                          if (TextUtils.isEmpty(s)) {
-                             //editText.error = application.getString(R.string.name_should_not_be_empty)
                              return@setOnClickListener
                          }
 
@@ -85,7 +84,6 @@ fun display(msg:String) {
                          }
 
                          if(exists) {
-                             //editText.error = application.getString(R.string.duplicated_name)
                              return@setOnClickListener
                          }
 
@@ -101,8 +99,6 @@ fun display(msg:String) {
                          com.nitap.attende.MainActivity.faceEngine.registerFaceFeature(faceFeatureInfo)
 
                          confirmUpdateDialog.cancel()
-
-                         //findViewById<Button>(R.id.btnVerify).isEnabled = MainActivity.userLists.size > 0
                          Toast.makeText(this, "Register succeed!", Toast.LENGTH_SHORT).show()
                      }
 

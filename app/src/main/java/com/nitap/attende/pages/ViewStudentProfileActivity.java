@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.nitap.attende.MyUtils;
 import com.nitap.attende.models.MyConfiguration;
-import com.nitap.attende.models.StudentConfiguration;
 import com.ttv.facerecog.R;
 
 public class ViewStudentProfileActivity extends AppCompatActivity {

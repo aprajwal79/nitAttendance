@@ -29,9 +29,9 @@ import java.util.Set;
 
 public class BluetoothScannerActivity extends AppCompatActivity {
 
-    public static String key = "ஆர்வமுடையவர்கள்ஆர்வமுடையஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்வர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்ஆர்வமுடையவர்கள்";
+    public static String key = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,";
     //"úêµ¶§µ¶§¥£औकखगघङ";
-            //"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,";//"aq5s4z069w0WE4NPxidwqw==";
+
     public static String name = "UNKNOWN" ;
     Set<String> myset ;
 
@@ -47,20 +47,7 @@ public class BluetoothScannerActivity extends AppCompatActivity {
     public static String s1 = "START";
 
     void t(String msg) {
-        /*
-        if (mylist2.contains(msg)) {
-            return;
-        }
-        //String s = statusTextView.getText().toString();
-        s1 = s1 + "    " + msg;
-        if (statusTextView != null) {
-            statusTextView.setText(s1);
-        } else {
-            Toast.makeText(this, "STATUS_TEXT_VIEW IS NULL", Toast.LENGTH_SHORT).show();
-        }
-        Toast.makeText(this, s1, Toast.LENGTH_LONG).show();
 
-         */
         if(myset.add(msg)) {
             s1 = s1 + "    " + msg;
             if (statusTextView != null) {
@@ -111,10 +98,7 @@ public class BluetoothScannerActivity extends AppCompatActivity {
             myset = null;
             myset = new LinkedHashSet<String>();
             myset.clear();
-            /*
-            mlist = new LinkedList<>();
-            mlist.add("mNULL");*/
-            //display("STARTED");
+
             setContentView(R.layout.activity_bluetooth);
 
             statusTextView = findViewById(R.id.status_text_view);
@@ -124,8 +108,7 @@ public class BluetoothScannerActivity extends AppCompatActivity {
             if(!a1) { display("Manifest.permission.BLUETOOTH_CONNECT permission required");  }
             if(!a2) { display("Manifest.permission.BLUETOOTH_SCAN permission required");  }
             bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-           /* BluetoothManager bluetoothManager = getSystemService(BluetoothManager.class);
-             bluetoothAdapter = bluetoothManager.getAdapter();*/
+
             if (bluetoothAdapter == null) {
                 statusTextView.setText("bluetooth_not_supported");
             } else {
@@ -133,10 +116,6 @@ public class BluetoothScannerActivity extends AppCompatActivity {
                     Intent enableBluetoothIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableBluetoothIntent, REQUEST_ENABLE_BLUETOOTH);
                 }
-
-                // devicesAdapter = new DevicesAdapter(this, bluetoothDevices);
-                RecyclerView devicesRecyclerView = findViewById(R.id.devices_recycler_view);
-                // devicesRecyclerView.setAdapter(devicesAdapter);
 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         REQUEST_LOCATION_PERMISSION);
@@ -156,21 +135,7 @@ public class BluetoothScannerActivity extends AppCompatActivity {
 
 
                     },0);
-                    /*
-                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) {
-                        ActivityCompat.requestPermissions(this,new String[] {
-                              Manifest.permission.NEARBY_WIFI_DEVICES
-                        },0);
-                    }
-                    */
 
-                    // TODO_ Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
 
                // display("ABOUT TO START BT SCAN");
                 display("BLUETOOTH DISCOVERY STATUS :" + bluetoothAdapter.isDiscovering() );

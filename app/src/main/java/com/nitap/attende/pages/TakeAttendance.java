@@ -124,7 +124,7 @@ public class TakeAttendance extends AppCompatActivity {
 
 
 
-    // @SuppressLint("MissingPermission")
+
     @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {

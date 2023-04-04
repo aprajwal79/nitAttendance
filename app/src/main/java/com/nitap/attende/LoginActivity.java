@@ -45,9 +45,7 @@ import com.nitap.attende.models.Section;
 import com.nitap.attende.models.SectionInfo;
 import com.nitap.attende.models.Student;
 import com.nitap.attende.models.Class;
-import com.nitap.attende.models.StudentConfiguration;
 import com.nitap.attende.models.Teacher;
-import com.nitap.attende.models.TeacherConfiguration;
 import com.nitap.attende.pages.HomeActivity;
 import com.ttv.face.FaceFeatureInfo;
 import com.ttv.facerecog.DBHelper;
@@ -204,102 +202,6 @@ public class LoginActivity extends AppCompatActivity {
            return;
        }
 
-       /*
-        if (currentUser!=null) {
-            String email = currentUser.getEmail();
-           // Toast.makeText(this, "EMAIL: "+email, Toast.LENGTH_SHORT).show();
-            String[] contents = Objects.requireNonNull(email).split("@");
-           // Toast.makeText(this, contents[0]+"$"+contents[1], Toast.LENGTH_SHORT).show();
-            if (contents.length == 2 && Objects.equals(contents[1], "student.nitandhra.ac.in")) {
-                // USERTYPE STUDENT
-                if (MyUtils.getConfiguration(this).student!=null) {
-                    MyUtils.removeString(this,"TEACHERCONFIG");
-                    MyUtils.removeString(this,"ADMINCONFIG");
-                    MyUtils.removeString(this,"TEACHERCONFIGBUILDER");
-                    MyUtils.removeString(this,"ADMINCONFIGBUILDER");
-                    MyUtils.removeString(this,"STUDENTCONFIGBUILDER");
-                    MyUtils.removeString(this,"USERTYPE");
-                    MyUtils.removeString(this,"EMAIL");
-                    MyUtils.removeString(this,"NAME");
-                    assert MyUtils.getStudentConfiguration(getApplicationContext()).student.email!=null;
-
-                    hasLeft = true;
-                    startActivity(new Intent(this,HomeActivity.class));
-                    finish();
-                } else {
-
-
-                    MyUtils.removeAll(getApplicationContext());
-                    StudentConfiguration firstStudentConfig = new StudentConfiguration();
-                    String updatedStudentConfig = MyUtils.getStringFromObject(firstStudentConfig);
-                    MyUtils.saveString(getApplicationContext(),"STUDENTCONFIGBUILDER",updatedStudentConfig);
-                    rollno = contents[0];
-                    sectionCode = rollno.substring(0,4);
-                    assert MyUtils.getStudentConfigurationBuilder(getApplicationContext())!=null;
-                    checkIfStudentExists(rollno);
-                    //Toast.makeText(getApplicationContext(), "sectionCode " +sectionCode, Toast.LENGTH_SHORT).show();
-
-                }
-
-            } else{
-                // USERTYPE FACULTY AND ADMIN
-                MyUtils.removeString(this,"STUDENTCONFIG");
-                MyUtils.removeString(this,"STUDENTCONFIGBUILDER");
-                MyUtils.removeString(this,"TEACHERCONFIGBUILDER");
-                MyUtils.removeString(this,"ADMINCONFIGBUILDER");
-
-                if (!Objects.equals(MyUtils.getString(this, "TEACHERCONFIG"), "EMPTY")) {
-                    MyUtils.removeString(this,"ADMINCONFIG");
-                    hasLeft = true;
-                    startActivity(new Intent(this,HomeActivity.class));
-                    finish();
-                } else if (!Objects.equals(MyUtils.getString(this, "ADMINCONFIG"), "EMPTY")) {
-                    MyUtils.removeString(this,"TEACHERCONFIG");
-                    hasLeft = true;
-                    startActivity(new Intent(this,HomeActivity.class));
-                    finish();
-                } else {
-                    checkIfUserIsTeacher(email);
-
-                    getTeacherEmailIds();
-                    getAdminEmailIds();
-
-                    /*
-                    if (teacherEmailIds.contains(email)) {
-                        MyUtils.saveString(this,"USERTYPE","TEACHER");
-                        MyUtils.saveString(this,"EMAIL",email);
-                        MyUtils.saveString(getApplicationContext(),"NAME", Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-                        hasLeft =true;
-                        startActivity(new Intent(this,FaceRecognitionActivity.class));
-                        finish();
-                    } else if (adminEmailIds.contains(email)) {
-                        MyUtils.saveString(this,"USERTYPE","ADMIN");
-                        MyUtils.saveString(this,"EMAIL",email);
-                        MyUtils.saveString(getApplicationContext(),"NAME", Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-                        hasLeft=true;
-                        startActivity(new Intent(this,FaceRecognitionActivity.class));
-                        finish();
-                    } else {
-                        ///oo
-                        //mGoogleSignInClient.signOut();
-                        // mAuth.signOut();
-                        Toast.makeText(this, "Account Unauthorised, Try Again", Toast.LENGTH_SHORT).show();
-                    }
-
-
-
-                }
-
-
-            }
-
-
-
-        } else {
-            Toast.makeText(this, "Please login to continue", Toast.LENGTH_SHORT).show();
-        }
-        */
-
         MyConfiguration myConfiguration = MyUtils.getConfiguration(this);
 
         if(myConfiguration==null ){
@@ -445,15 +347,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         }
-        /*
-        while() {
-            display("waiting for loop end");
-            try {
-                //Thread.sleep(100);
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }*/
 
 
 
@@ -560,18 +453,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     initialiseStudentCredentials();
 
-                    /*
-                    hasLeft = true;
-                    startActivity(new Intent(LoginActivity.this, FaceRecognitionActivity.class));
-                    finish();
-                    */
-                    /*
-                    String finalConfigString = MyUtils.getStringFromObject(studentConfigBuilder);
-                    MyUtils.saveString(getApplicationContext(),"STUDENTCONFIG",finalConfigString);
-                    MyUtils.removeString(getApplicationContext(),"STUDENTCONFIGBUILDER");
-                    hasLeft = true;
-                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-                    finish();*/
 
                 } else {
                     // TODO: Now section found but no class found, display error message
@@ -603,38 +484,6 @@ public class LoginActivity extends AppCompatActivity {
 
         uploadPhoto();
 
-        /*
-        assert email != null;
-        String[] contents = email.split("@");
-        String rollno = contents[0];
-        facetagForFaceInfo = rollno;
-        Student student1 = new Student();
-        student1.rollno = rollno;
-        student1.email =email;
-        student1.name = mAuth.getCurrentUser().getDisplayName();
-        student1.sectionId = rollno.substring(0,4);
-        StudentConfiguration updatedConfig = MyUtils.getStudentConfigurationBuilder(getApplicationContext());
-        assert updatedConfig != null;
-        updatedConfig.student = student1;
-        String updatedString = MyUtils.getStringFromObject(updatedConfig);
-        MyUtils.saveString(getApplicationContext(),"STUDENTCONFIGBUILDER",updatedString);
-        assert MyUtils.getStudentConfigurationBuilder(getApplicationContext()) != null;
-        //setContentView(R.layout.activity_face_recognition);
-        //btnRegister = findViewById(R.id.upload_btn);
-        //submitButton =findViewById(R.id.button_next);
-        //btnRegister.setEnabled(true);
-        //submitButton.setEnabled(false);
-        /*
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction("android.intent.action.PICK");
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
-            }
-        });
-        */
 
     }
 
@@ -717,121 +566,6 @@ public class LoginActivity extends AppCompatActivity {
         downloadFile(getApplicationContext(),rollno,".jpeg", Environment.DIRECTORY_DOWNLOADS,url);
     }
 
-    private void registerFace(String rollno) {
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("students").child(rollno);
-/*
-        try{
-            File localFile = File.createTempFile("images", "jpeg");
-
-            storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    // Local temp file has been created
-                    Toast.makeText(getApplicationContext(), "Download success", Toast.LENGTH_SHORT).show();
-                    Context var10000 =  getApplicationContext(); //MainActivity.context;
-                    Uri var10001 = Uri.fromFile(localFile);
-                    Bitmap var20 = null;
-                    try {
-                        var20 = ImageRotator.getCorrectlyOrientedImage(getApplicationContext(), var10001);
-                    } catch (Throwable e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                    Bitmap bitmap = var20;
-                    List var21 = MainActivity.faceEngine.detectFace(bitmap);
-                    final List faceResults = var21;
-                    Collection var6 = (Collection) faceResults;
-                    if (var6.size() == 1) {
-                        MainActivity.faceEngine.extractFeature(bitmap, true, faceResults);
-                        Rect cropRect = Utils.getBestRect(bitmap.getWidth(), bitmap.getHeight(), ((FaceResult)faceResults.get(0)).rect);
-                        final Bitmap headImg = Utils.crop(bitmap, cropRect.left, cropRect.top, cropRect.width(), cropRect.height(), 120, 120);
-                        String s = rollno;
-                        DBHelper var9 = MainActivity.mydb;
-                        int user_id = var9.insertUser(s, headImg, ((FaceResult)faceResults.get(0)).feature);
-                        FaceEntity face = new FaceEntity(user_id, s, headImg, ((FaceResult)faceResults.get(0)).feature);
-                        com.ttv.facerecog.MainActivity.Companion.getUserLists().add(face);
-                        FaceFeatureInfo faceFeatureInfo = new FaceFeatureInfo(user_id, ((FaceResult)faceResults.get(0)).feature);
-                        MainActivity.faceEngine.registerFaceFeature(faceFeatureInfo);
-
-                        Toast.makeText(getApplicationContext(), "ALL SUCCESS", Toast.LENGTH_SHORT).show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    }
-                    else {
-                        var6 = (Collection)faceResults;
-                        if (var6.size() > 1) {
-                            Toast.makeText(getApplicationContext(), (CharSequence)"Multiple face detected!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), (CharSequence)"No face detected!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-
-
-
-
-
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                    Toast.makeText(getApplicationContext(),"Download Failed",Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Throwable e ){
-            e.printStackTrace();
-            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-*/      storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                String url = uri.toString();
-                display("got download url");
-                downloadFile(getApplicationContext(),rollno,".jpeg", Environment.DIRECTORY_DOWNLOADS,url);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                display("failed to get download url");
-            }
-        });
-
-
-/*
-        //assert bitmap!=null;
-        List var21 = MainActivity.faceEngine.detectFace(bitmap);
-        final List faceResults = var21;
-        Collection var6 = (Collection)faceResults;
-        if (var6.size() == 1) {
-            MainActivity.faceEngine.extractFeature(bitmap, true, faceResults);
-            Rect cropRect = Utils.getBestRect(bitmap.getWidth(), bitmap.getHeight(), ((FaceResult)faceResults.get(0)).rect);
-            final Bitmap headImg = Utils.crop(bitmap, cropRect.left, cropRect.top, cropRect.width(), cropRect.height(), 120, 120);
-            String s = studentConfigurationBuilder.student.rollno;
-            DBHelper var9 = MainActivity.mydb;
-            int user_id = var9.insertUser(s, headImg, ((FaceResult)faceResults.get(0)).feature);
-            FaceEntity face = new FaceEntity(user_id, s, headImg, ((FaceResult)faceResults.get(0)).feature);
-            com.ttv.facerecog.MainActivity.Companion.getUserLists().add(face);
-            FaceFeatureInfo faceFeatureInfo = new FaceFeatureInfo(user_id, ((FaceResult)faceResults.get(0)).feature);
-            MainActivity.faceEngine.registerFaceFeature(faceFeatureInfo);
-
-            Toast.makeText((Context) getApplicationContext(), (CharSequence)"Register succeed!", Toast.LENGTH_SHORT).show();
-*/
-        }
 
     BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
@@ -849,73 +583,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-    public void trainFace(Uri uri) {
-        myUri = uri;
-        myRollno = rollno;
-        startActivity(new Intent(getApplicationContext(),MainActivity2.class));
-
-        /*
-
-        display("Training the face");
-        Uri var10001 = uri;
-        Bitmap var20 = null;
-        try {
-            var20 = ImageRotator.getCorrectlyOrientedImage(MainActivity.context, var10001);
-        } catch (Throwable e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-        }
-        Bitmap bitmap = var20;
-        assert bitmap!=null;
-        List var21 = MainActivity.faceEngine.detectFace(bitmap);
-        final List faceResults = var21;
-        Collection var6 = (Collection) faceResults;
-        if (var6.size() == 1) {
-            MainActivity.faceEngine.extractFeature(bitmap, true, faceResults);
-            Rect cropRect = Utils.getBestRect(bitmap.getWidth(), bitmap.getHeight(), ((FaceResult)faceResults.get(0)).rect);
-            final Bitmap headImg = Utils.crop(bitmap, cropRect.left, cropRect.top, cropRect.width(), cropRect.height(), 120, 120);
-            String s = rollno;
-            DBHelper var9 = MainActivity.mydb;
-            int user_id = var9.insertUser(s, headImg, ((FaceResult)faceResults.get(0)).feature);
-            FaceEntity face = new FaceEntity(user_id, s, headImg, ((FaceResult)faceResults.get(0)).feature);
-            com.ttv.facerecog.MainActivity.Companion.getUserLists().add(face);
-            FaceFeatureInfo faceFeatureInfo = new FaceFeatureInfo(user_id, ((FaceResult)faceResults.get(0)).feature);
-            MainActivity.faceEngine.registerFaceFeature(faceFeatureInfo);
-
-            Toast.makeText(getApplicationContext(), "ALL SUCCESS", Toast.LENGTH_SHORT).show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }
-        else {
-            var6 = (Collection)faceResults;
-            if (var6.size() > 1) {
-                Toast.makeText(getApplicationContext(), (CharSequence)"Multiple face detected!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), (CharSequence)"No face detected!", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-         */
-
-
-
-
-
-
-
-
-    }
 
     private void downloadFile(Context applicationContext, String filename, String extension, String directoryDownloads, String url) {
 
@@ -979,153 +646,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /*
-        private void getListOfSections() {
-            DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("SECTION-INFO");
-            courseRef.addValueEventListener(new ValueEventListener() {
-                @SuppressLint("NewApi")
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Iterable<DataSnapshot> iterable = snapshot.getChildren();
-                    Iterator<DataSnapshot> iterator = iterable.iterator();
-                    iterable.forEach(dataSnapshot -> {
 
-                        Toast.makeText(LoginActivity.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-
-                        sections.add(dataSnapshot.getKey());
-                        Toast.makeText(getApplicationContext(), Arrays.toString(sections.toArray()), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getApplicationContext(), Arrays.toString(sections.toArray()), Toast.LENGTH_SHORT).show();
-
-                        if (sections.contains(sectionCode)) {
-                            MyUtils.saveString(getApplicationContext(),"USERTYPE","STUDENT");
-                            MyUtils.saveString(getApplicationContext(),"EMAIL",email);
-                            MyUtils.saveString(getApplicationContext(),"NAME", Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-                            MyUtils.removeString(getApplicationContext(),"TEACHER");
-                            MyUtils.removeString(getApplicationContext(),"ADMIN");
-                            hasLeft=true;
-                            startActivity(new Intent(getApplicationContext(),FaceRecognitionActivity.class));
-                            finish();
-                        }
-                    });
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
-        }
-    */
-
-    private void getListOfSections() {
-        DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("OBJECTS").child("4212");
-        courseRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NewApi")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    sections.add(snapshot.getKey());
-                    if(sections.contains("4212")) {
-                        Toast.makeText(LoginActivity.this, "'4212' found in snapshot", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "'4212' not found in snapshot", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    Toast.makeText(LoginActivity.this, "SNAPSHOT DOES NOT EXIST", Toast.LENGTH_SHORT).show();
-                }
-
-
-                /*
-                Iterable<DataSnapshot> iterable = snapshot.getChildren();
-                Iterator<DataSnapshot> iterator = iterable.iterator();
-                iterable.forEach(dataSnapshot -> {
-
-                    Toast.makeText(LoginActivity.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-
-                    sections.add(dataSnapshot.getKey());
-                    Toast.makeText(getApplicationContext(), Arrays.toString(sections.toArray()), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), Arrays.toString(sections.toArray()), Toast.LENGTH_SHORT).show();
-
-                    if (sections.contains(sectionCode)) {
-                        MyUtils.saveString(getApplicationContext(),"USERTYPE","STUDENT");
-                        MyUtils.saveString(getApplicationContext(),"EMAIL",email);
-                        MyUtils.saveString(getApplicationContext(),"NAME", Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-                        MyUtils.removeString(getApplicationContext(),"TEACHER");
-                        MyUtils.removeString(getApplicationContext(),"ADMIN");
-                        hasLeft=true;
-                        startActivity(new Intent(getApplicationContext(),FaceRecognitionActivity.class));
-                        finish();
-                    }
-                });
-                */
-                courseRef.removeEventListener(this);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getTeacherEmailIds() {
-        DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("OBJECTS").child("TEACHERS");
-        courseRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NewApi")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> iterable = snapshot.getChildren();
-                Iterator<DataSnapshot> iterator = iterable.iterator();
-                iterable.forEach(dataSnapshot -> {
-
-                    Toast.makeText(LoginActivity.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-
-                    sections.add(dataSnapshot.getKey());
-                    Toast.makeText(getApplicationContext(), Arrays.toString(sections.toArray()), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), Arrays.toString(sections.toArray()), Toast.LENGTH_SHORT).show();
-
-                    if (sections.contains(sectionCode)) {
-                        MyUtils.saveString(getApplicationContext(),"USERTYPE","STUDENT");
-                        MyUtils.saveString(getApplicationContext(),"EMAIL",email);
-                        MyUtils.saveString(getApplicationContext(),"NAME", Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-                        MyUtils.removeString(getApplicationContext(),"TEACHER");
-                        MyUtils.removeString(getApplicationContext(),"ADMIN");
-                        hasLeft=true;
-                        startActivity(new Intent(getApplicationContext(),FaceRecognitionActivity.class));
-                        finish();
-                    }
-                });
-                courseRef.removeEventListener(this);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getAdminEmailIds() {
-        DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("OBJECTS").child("TEACHERS");
-        courseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    teacherEmailIds.add(Objects.requireNonNull(dataSnapshot.getKey()).replace("?","."));
-                }
-                courseRef.removeEventListener(this);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        // Toast.makeText(this, Arrays.toString(teacherEmailIds.toArray()), Toast.LENGTH_SHORT).show();
-    }
 
     public static void signOut(Context context) {
         FirebaseAuth userAuth;

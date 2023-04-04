@@ -258,6 +258,7 @@ public final class RecognitionActivity extends AppCompatActivity {
         this.mHandler.sendMessage(message);
     }
 
+    //     TODO     :      DO       NOT      DELETE      THE       CODES       BELOW
     // $FF: synthetic method
     public static final void access$setAppCtx$p(RecognitionActivity $this, Context var1) {
         $this.appCtx = var1;
