@@ -10,4 +10,5 @@ public class MyStudent {
     public String sectionId;
     public String faceFeatureInfoString;
     public String photoUrl;
+
 }

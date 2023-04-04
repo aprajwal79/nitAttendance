@@ -181,7 +181,9 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                                getSaltAndUpdateUI(user);
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -192,6 +194,25 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void getSaltAndUpdateUI(FirebaseUser user) {
+        DatabaseReference saltRef = FirebaseDatabase.getInstance().getReference().child("salt");
+        saltRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                display("Salt found");
+                String salt = dataSnapshot.getValue(String.class);
+                MyUtils.setSalt(getApplicationContext(),salt);
+                updateUI(user);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, "Salt not found", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void updateUI(FirebaseUser currentUser) {

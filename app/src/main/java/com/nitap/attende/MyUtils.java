@@ -62,7 +62,6 @@ public class MyUtils {
 
     }
 
-
     public static String getStringFromObject(Object object) {
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
@@ -71,21 +70,24 @@ public class MyUtils {
         return jsonString;
     }
 
-    public static void removeAll(Context context) {
-        String[] removables = {"STUDENTCONFIG","TEACHERCONFIG","ADMINCONFIG","STUDENTCONFIGBUILDER",
-                "TEACHERCONFIGBUILDER","ADMINCONFIGBUILDER","USERTYPE","EMAIL","NAME"};
-        for (String item : removables) {
-            MyUtils.removeString(context,item);
-        }
-    }
-
     public static void clearAppData(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         am.clearApplicationUserData();
 
     }
 
+    public static String getSalt(Context context) {
+        String salt = MyUtils.getString(context,"SALT");
+        if (Objects.equals(salt, "EMPTY")){
+            return null;
+        } else {
+            return salt;
+        }
+    }
 
+    public static void setSalt(Context context,String salt) {
+        MyUtils.saveString(context,"SALT",salt);
+    }
 
     public static FaceFeatureInfo getFaceFeatureInfo(Context applicationContext, String faceinfoString) {
         ObjectMapper mapper = new ObjectMapper();
@@ -99,13 +101,6 @@ public class MyUtils {
         else  { return faceFeatureInfo; }
     }
 
-
-
-
-
-
-
-    
     public static MyConfiguration getConfiguration(Context context) {
         ObjectMapper mapper = new ObjectMapper();
         MyConfiguration myConfiguration = new MyConfiguration();

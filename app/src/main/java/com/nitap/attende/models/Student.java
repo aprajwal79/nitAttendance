@@ -14,7 +14,7 @@ public class Student {
     public String degree,branch,year,sem;
     public String photoUrl;
     public ArrayList<String> courses;
-
+    public String salt;
 
 
 

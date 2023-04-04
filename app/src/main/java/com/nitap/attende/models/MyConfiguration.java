@@ -4,7 +4,7 @@ public class MyConfiguration {
     public Student student;
     public Teacher teacher;
     public Admin admin;
-
+    public String salt;
 
 }
 
