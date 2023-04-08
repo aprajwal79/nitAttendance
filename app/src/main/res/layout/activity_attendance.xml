@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Mark Your Presence Here!"
             android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -47,6 +47,7 @@ public class AddClassActivity extends AppCompatActivity {
                 String[] arr = courses.getText().toString().split(",");
                 class1.courses=new ArrayList<>(Arrays.asList(arr));
 
+
                 DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("classes").child(class1.classId);
                 courseRef.setValue(class1).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

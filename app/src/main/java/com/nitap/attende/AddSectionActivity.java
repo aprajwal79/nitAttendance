@@ -51,7 +51,7 @@ public class AddSectionActivity extends AppCompatActivity {
                 section.endRollno = endRollNo.getText().toString();
                  int max = (Integer.parseInt(section.endRollno) - Integer.parseInt(section.startRollno) + 1);
                  section.max = Integer.toString(max);
-                 section.sectionId = section.startRollno.substring(0,4);
+                 section.sectionId = section.startRollno.substring(0,section.startRollno.length()-2);
                  section.sectionName = sectionName.getText().toString();
                  //section.teacherEmails = new ArrayList<>();
                 // section.teacherEmails.add("test1");

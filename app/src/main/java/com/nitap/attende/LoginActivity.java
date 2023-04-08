@@ -406,7 +406,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkIfSectionExists() {
-        String sectionId = mAuth.getCurrentUser().getEmail().split("@")[0].substring(0,4);
+        String rollno = mAuth.getCurrentUser().getEmail().split("@")[0];
+        String sectionId = rollno.substring(0,rollno.length()-2);
         Toast.makeText(this,"sec id " + sectionId, Toast.LENGTH_SHORT).show();
         DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("sections").child(sectionId);
         courseRef.addValueEventListener(new ValueEventListener() {
@@ -517,7 +518,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void fetchSectionDetails() {
-        String sectionId = mAuth.getCurrentUser().getEmail().split("@")[0].substring(0,4);
+        String rollno = mAuth.getCurrentUser().getEmail().split("@")[0];
+        String sectionId = rollno.substring(0,rollno.length()-2);
 
         Toast.makeText(this, "section id "+ sectionId, Toast.LENGTH_SHORT).show();
         DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("sections").child(sectionId);

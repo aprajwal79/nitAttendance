@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,9 +24,12 @@ import com.google.firebase.storage.UploadTask;
 import com.nitap.attende.models.Attendance;
 import com.nitap.attende.models.SectionInfo;
 import com.nitap.attende.models.Teacher;
+import com.opencsv.CSVWriter;
 import com.ttv.facerecog.R;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -39,7 +44,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -109,8 +116,8 @@ public class TestActivity extends AppCompatActivity {
         //File myfile = new File(mydir.getAbsolutePath()+"test.xlsx");
         File myfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "test.xlsx");
         try {
-            myfile.createNewFile();
-        } catch (IOException e) {
+           // myfile.createNewFile();
+        } catch (Exception e) {
             e.printStackTrace();
             //throw new RuntimeException(e);
         }
@@ -128,11 +135,17 @@ public class TestActivity extends AppCompatActivity {
         }
 
         //writeAttendance1(this,new Attendance());
+        //writeAttendance(this,attendance);
+        try {
+            writeAttendance(this,attendance);
+           // writeDataLineByLine(this,attendance);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       /*writeAttendance(this,attendance);
         writeAttendance(this,attendance);
-       writeAttendance(this,attendance);
         writeAttendance(this,attendance);
-        writeAttendance(this,attendance);
-        writeAttendance(this,attendance);
+        writeAttendance(this,attendance);*/
 
     }
 
@@ -200,26 +213,61 @@ public class TestActivity extends AppCompatActivity {
 */
 
 
-    public static void writeAttendance(Context context, Attendance attendance)  {
+    public void writeAttendance(Context context, Attendance attendance) throws IOException {
        /* Attendance myattendance = new Attendance();
         Attendance attendance = new Attendance();
         attendance.attendance = new ArrayList<>();
         attendance.attendance.add("bgiu");
         attendance.attendance.add("nioi");*/
 
+/*
+        InputStream myInput;
+// initialize asset manager
+        AssetManager assetManager = getAssets();
+//  open excel file name as myexcelsheet.xls
+        myInput = assetManager.open("myexcelsheet.xls");
+// Create a POI File System object
+        POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+// Create a workbook using the File System
+        HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+// Get the first sheet from workbook
+        HSSFSheet mySheet = myWorkBook.getSheetAt(0);*/
+
 
         try {
             Workbook workbook = null;
             // workbook = new HSSFWorkbook();
-            File myfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Attendance.xlsx");
+            File myfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"Attendance.xlsx");
+            //myfile.createNewFile();
+            FileInputStream fileInputStream = null;
+
+
+            Log.e("TAG", "Reading from Excel" + myfile);
+
+            // Create instance having reference to .xls file
+
+            if (!myfile.exists()) {
+                //myfile.createNewFile();
+                //fileInputStream = new FileInputStream(myfile);
+                workbook = new XSSFWorkbook();
+            } else {
+                fileInputStream = new FileInputStream(myfile);
+                workbook = WorkbookFactory.create(fileInputStream);
+                // workbook = new XSSFWorkbook(fileInputStream);
+                fileInputStream.close();
+            }
+
+
+            //new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Attendance.xlsx");
             //myfile.createNewFile();
             //workbook = new XSSFWorkbook(myfile.getPath());
             try {
                 //workbook = new XSSFWorkbook(new FileInputStream(myfile));
 
-                workbook = WorkbookFactory.create(new FileInputStream(myfile));
+                //workbook = WorkbookFactory.create(new FileInputStream(myfile));
             } catch (Throwable e ) {
-                workbook = new XSSFWorkbook();
+                e.printStackTrace();
+                // workbook = new XSSFWorkbook();
             }
             SectionInfo sectionInfo = attendance.sectionInfo;
             //String sheetname = sectionInfo.degree+sectionInfo.branch+sectionInfo.year+sectionInfo.sem+sectionInfo.sectionName;
@@ -233,8 +281,10 @@ public class TestActivity extends AppCompatActivity {
 
             // Sheet sheet = workbook.createSheet("Countries");
             //int currentColumn = sheet.createRow(0).getLastCellNum();
-            Row firstRow = sheet.createRow(1);
-            int i=1;
+            Row firstRow = sheet.createRow(0);
+            int i = sheet.getLastRowNum()+1;
+            //int i=1;
+            /*
             while (true) {
                 Cell currentCell = firstRow.createCell(i);
                 if (firstRow.getCell(i).getCellTypeEnum()!= CellType.BLANK) {
@@ -246,22 +296,23 @@ public class TestActivity extends AppCompatActivity {
                     break;
                 }
             }
+*/
 
 
 
 
 
-
-            int noOfColumns = i ;//= sheet.getRow(0).getPhysicalNumberOfCells();
+            int noOfColumns = 0 ;//= sheet.getRow(0).getPhysicalNumberOfCells();
             //noOfColumns++;
             //noOfColumns = currentColumn+1;
-            createCell(firstRow,i,attendance.dateInfo);
-            int rowIndex = 2;
+            createCell(sheet.createRow(i),noOfColumns++,attendance.dateInfo);
+            int rowIndex = i;
+            Row row = sheet.createRow(rowIndex++);
             Iterator<String> iterator = attendance.attendance.iterator();
             while(iterator.hasNext()){
                 String attendance1 = iterator.next();
-                Row row = sheet.createRow(rowIndex++);
-                Cell cell0 = row.createCell(noOfColumns);
+
+                Cell cell0 = row.createCell(noOfColumns++);
                 cell0.setCellValue(attendance1);
                 //Cell cell1 = row.createCell(1);
                 //cell1.setCellValue(country.getShortCode());
@@ -284,5 +335,169 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    public static void writeDataLineByLine(Context c, Attendance attendance) throws IOException {
+        // first create file object for file placed at location
+        // specified by filepath
+        String filename = attendance.sectionInfo.classId+attendance.courseCode+attendance.dateInfo;
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Attendance.csv");
+       // File file = new File(filePath);
+        if (file.createNewFile()  ) {
+            Toast.makeText(c,"Created CSV File",Toast.LENGTH_SHORT).show();
+        }
+        try {
+            // create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(file,true);
+
+            // create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(new FileWriter(file,true),',',CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.DEFAULT_ESCAPE_CHARACTER,"\r\n");
+            //new CSVWriter(outputfile);
+
+            // adding header to csv
+           // String[] header = { "Name", "Class", "Marks" };
+            String[] header = new String[100];
+            for (int i=0;i<attendance.attendance.size();i++) {
+                header[i] = attendance.attendance.get(i);
+            }
+
+            writer.writeNext(header);
+
+
+            // add data to csv
+            String[] data1 = { "Aman", "10", "620" };
+            writer.writeNext(data1);
+            String[] data2 = { "Suraj", "10", "630" };
+            writer.writeNext(data2);
+
+            // closing writer connection
+            writer.close();
+        }
+        catch (IOException e) {
+            //  Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+
+
+    // ORIGINAL COPY DO NOT TOUCH
+
+    /*
+    public void writeAttendance(Context context, Attendance attendance) throws IOException {
+       /* Attendance myattendance = new Attendance();
+        Attendance attendance = new Attendance();
+        attendance.attendance = new ArrayList<>();
+        attendance.attendance.add("bgiu");
+        attendance.attendance.add("nioi");
+
+/*
+        InputStream myInput;
+// initialize asset manager
+        AssetManager assetManager = getAssets();
+//  open excel file name as myexcelsheet.xls
+        myInput = assetManager.open("myexcelsheet.xls");
+// Create a POI File System object
+        POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+// Create a workbook using the File System
+        HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
+// Get the first sheet from workbook
+        HSSFSheet mySheet = myWorkBook.getSheetAt(0);   * /
+
+
+        try {
+            Workbook workbook = null;
+            // workbook = new HSSFWorkbook();
+            File myfile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"Attendance.xlsx");
+            //myfile.createNewFile();
+            FileInputStream fileInputStream = null;
+            fileInputStream = new FileInputStream(myfile);
+            Log.e("TAG", "Reading from Excel" + myfile);
+
+            // Create instance having reference to .xls file
+
+            if (!myfile.exists()) {
+                workbook = new XSSFWorkbook(fileInputStream);
+            } else {
+                workbook = WorkbookFactory.create(fileInputStream);
+                // workbook = new XSSFWorkbook(fileInputStream);
+            }
+            fileInputStream.close();
+
+            //new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Attendance.xlsx");
+            //myfile.createNewFile();
+            //workbook = new XSSFWorkbook(myfile.getPath());
+            try {
+                //workbook = new XSSFWorkbook(new FileInputStream(myfile));
+
+                //workbook = WorkbookFactory.create(new FileInputStream(myfile));
+            } catch (Throwable e ) {
+                e.printStackTrace();
+                // workbook = new XSSFWorkbook();
+            }
+            SectionInfo sectionInfo = attendance.sectionInfo;
+            //String sheetname = sectionInfo.degree+sectionInfo.branch+sectionInfo.year+sectionInfo.sem+sectionInfo.sectionName;
+            String sheetname = attendance.sectionInfo.classId + attendance.courseCode;  //"pojugug";
+
+
+            Sheet sheet = workbook.getSheet(sheetname);
+            if (sheet==null) {
+                sheet = workbook.createSheet(sheetname);
+            }
+
+            // Sheet sheet = workbook.createSheet("Countries");
+            //int currentColumn = sheet.createRow(0).getLastCellNum();
+            Row firstRow = sheet.createRow(1);
+            int i = sheet.getLastRowNum()+1;
+            //int i=1;
+            /*
+            while (true) {
+                Cell currentCell = firstRow.createCell(i);
+                if (firstRow.getCell(i).getCellTypeEnum()!= CellType.BLANK) {
+                    Toast.makeText(context, i + " is filled", Toast.LENGTH_SHORT).show();
+                        i++;
+                       // continue;
+                    } else {
+                    Toast.makeText(context, i + " is blank", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+
+/*
+
+
+
+
+            int noOfColumns = 1 ;//= sheet.getRow(0).getPhysicalNumberOfCells();
+            //noOfColumns++;
+            //noOfColumns = currentColumn+1;
+            createCell(firstRow,i,attendance.dateInfo);
+            int rowIndex = i;
+            Row row = sheet.createRow(rowIndex++);
+            Iterator<String> iterator = attendance.attendance.iterator();
+            while(iterator.hasNext()){
+                String attendance1 = iterator.next();
+
+                Cell cell0 = row.createCell(noOfColumns++);
+                cell0.setCellValue(attendance1);
+                //Cell cell1 = row.createCell(1);
+                //cell1.setCellValue(country.getShortCode());
+            }
+
+
+
+
+
+            FileOutputStream fos = new FileOutputStream(myfile);
+            workbook.write(fos);
+            fos.close();
+            workbook.close();
+        }catch (Throwable e) {
+            e.printStackTrace();
+
+            Toast.makeText(context, "Failed to update Excel sheet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+  */
 
 }

@@ -35,7 +35,8 @@ public class ViewStudentProfileActivity extends AppCompatActivity {
         sem.setText("SEM: "+myConfiguration.student.sem);
         sectionName = findViewById(R.id.sectionName);
         sectionName.setText("SECTION: "+myConfiguration.student.sectionName);
-
+        TextView courseview = findViewById(R.id.courseList);
+        courseview.setText("COURSES: " + String.valueOf(myConfiguration.student.courses));
 
 
 

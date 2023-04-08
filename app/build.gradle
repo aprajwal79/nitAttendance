@@ -99,4 +99,6 @@ dependencies {
     implementation 'javax.xml.stream:stax-api:1.0'
     implementation 'com.fasterxml:aalto-xml:1.2.2'
 
+    implementation 'com.opencsv:opencsv:4.6'
+
 }

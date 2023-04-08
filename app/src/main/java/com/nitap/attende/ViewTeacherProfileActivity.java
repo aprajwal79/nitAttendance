@@ -35,13 +35,17 @@ public class ViewTeacherProfileActivity extends AppCompatActivity {
             s = s + info.sectionId + ", ";
         }
         sections.setText("SECTIONS: " + s);
-
+/*
         String courses = "";
         for (String course : teacher.courses) {
-            courses = courses + ", ";
+            courses = course + ", ";
         }
+        */
+        String coursesString = new String(String.valueOf(teacher.courses));
+
+
         TextView courseview = findViewById(R.id.courses);
-        courseview.setText("COURSES: " + courses);
+        courseview.setText("COURSES: " + coursesString);
 
 
 

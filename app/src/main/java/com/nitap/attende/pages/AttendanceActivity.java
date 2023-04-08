@@ -1,12 +1,14 @@
 package com.nitap.attende.pages;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,9 +25,11 @@ import com.ttv.facerecog.databinding.ActivityAttendanceBinding;
 
 public class AttendanceActivity extends AppCompatActivity {
 
+    boolean isGivingAttendance = false;
     ActivityAttendanceBinding binding;
     String bt_name ;
     BluetoothAdapter bluetoothAdapter;
+String sOldName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +49,18 @@ public class AttendanceActivity extends AppCompatActivity {
             Toast.makeText(this, "can't access local storage", Toast.LENGTH_SHORT).show();
         }
 
+        String data[] = myConfiguration.student.courses.toArray(new String[0]);
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, data);
+        binding.spinner.setAdapter(spinnerArrayAdapter);
 
 
         binding.attendanceBtn.setOnClickListener(v -> {
+
+            if (isGivingAttendance) {
+                Toast.makeText(getApplicationContext(), "Already giving attendance", Toast.LENGTH_SHORT).show();
+                return;}
 
             if (ContextCompat.checkSelfPermission(AttendanceActivity.this, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_DENIED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -67,7 +80,7 @@ public class AttendanceActivity extends AppCompatActivity {
                     bluetoothAdapter.enable();
                 } else if (!bluetoothAdapter.isDiscovering()) {
                     Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                    discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 100);
+                    discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 120);
 
 
                     bluetoothLauncher.launch(discoverableIntent);
@@ -81,7 +94,7 @@ public class AttendanceActivity extends AppCompatActivity {
     }
 
     public boolean setBluetooth(boolean enable) {
-        final long lTimeToGiveUp_ms = System.currentTimeMillis() + 10000;
+        final long lTimeToGiveUp_ms = System.currentTimeMillis() + 40000;
 
         Toast.makeText(this, "Entered SetBluetooth", Toast.LENGTH_SHORT).show();
 
@@ -89,10 +102,11 @@ public class AttendanceActivity extends AppCompatActivity {
 
             if (bluetoothAdapter.isEnabled()) {
 
-                String sOldName = bluetoothAdapter.getName();
+                 sOldName = bluetoothAdapter.getName();
 
                 Boolean flag = bluetoothAdapter.setName(bt_name);
-
+                isGivingAttendance = true;
+                Toast.makeText(this, "Giving Attendance, please do not close the app", Toast.LENGTH_LONG).show();
 
             }
 
@@ -106,7 +120,7 @@ public class AttendanceActivity extends AppCompatActivity {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
 
-                if (result.getResultCode() == 100) {
+                if (result.getResultCode() == 120) {
                     setBluetooth(true);
                 } else {
                     Toast.makeText(this, "Not discoverable", Toast.LENGTH_SHORT).show();
@@ -116,6 +130,16 @@ public class AttendanceActivity extends AppCompatActivity {
     );
 
 
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onStop() {
+        super.onStop();
+        try{
+            bluetoothAdapter.setName(sOldName);
+        }catch(Throwable e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
